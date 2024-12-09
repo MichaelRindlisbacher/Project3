@@ -6,7 +6,7 @@ let app = express(); // creating the express object
 
 let path = require('path'); // imports the path class/module
 
-const port = 3001; //setting port number
+const port = process.env.PORT || 3001; //setting port number
 
 app.set("view engine", 'ejs'); // tells the browser we ain't using html
 
@@ -41,7 +41,7 @@ const db = require("knex") ({ // Setting up connection with pg database
     user : process.env.RDS_USERNAME || "postgres",
     password : process.env.RDS_PASSWORD || "Inc0rrecT123",
     database :process.env.RDS_DB_NAME || "postgres",
-    port : process.env.PORT || 8080, // Check port under the properties and connection of the database you're using in pgadmin4
+    port : process.env.RDS_PORT || 8080, // Check port under the properties and connection of the database you're using in pgadmin4
     ssl : process.env.DB_SSL ? {rejectUnauthorized: false} : false
 }
 })
