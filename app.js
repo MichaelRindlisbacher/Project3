@@ -6,7 +6,7 @@ let app = express(); // creating the express object
 
 let path = require('path'); // imports the path class/module
 
-const port = 3001; //setting port number
+const port = process.env.PORT || 3001; //setting port number
 
 app.set("view engine", 'ejs'); // tells the browser we ain't using html
 
