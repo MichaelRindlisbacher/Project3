@@ -41,7 +41,7 @@ const db = require("knex") ({ // Setting up connection with pg database
     user : process.env.RDS_USERNAME || "postgres",
     password : process.env.RDS_PASSWORD || "Inc0rrecT123",
     database :process.env.RDS_DB_NAME || "postgres",
-    port : process.env.RDS_PORT || 8080, // Check port under the properties and connection of the database you're using in pgadmin4
+    port : process.env.PORT || 8080, // Check port under the properties and connection of the database you're using in pgadmin4
     ssl : process.env.DB_SSL ? {rejectUnauthorized: false} : false
 }
 })
