@@ -103,7 +103,7 @@ app.get('/checkout', (req, res) => {
 // Route to handle adding a product to the cart
 app.post('/add-to-cart', (req, res) => {
     try {
-        const { productId, productName, productPrice } = req.body;
+        const { productId, productName, productPrice, productType } = req.body;
     
         // Initialize cart if it doesn't exist
         if (!req.session.cart) {
@@ -114,7 +114,8 @@ app.post('/add-to-cart', (req, res) => {
         const newItem = {
           id: productId,
           name: productName,
-          price: productPrice
+          price: productPrice,
+          type: productType
         };
     
         req.session.cart.push(newItem);
@@ -152,8 +153,8 @@ try {
 
 app.post('/checkout', (req, res) => {
   console.log('Checkout form submitted!');
-  const { first_name, last_name, email, address, city, state, zip, wrist_size } = req.body;  
-  console.log(first_name, last_name, email, address, city, state, zip, wrist_size);
+  const { first_name, last_name, email, address, city, state, zip } = req.body;  
+  console.log(first_name, last_name, email, address, city, state, zip );
   res.redirect('/');
 });
 
