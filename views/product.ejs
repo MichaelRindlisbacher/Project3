@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - P & P</title>
+    <link rel="stylesheet" href="/product_styles.css">
+</head>
+<body class="general-page">
+    <div class="product-page">
+        <nav class="navbar">
+            <div class="nav-logo"><a href="/"><img src="/images/logo.png" alt="P & P Logo"></a></div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/product">Shop</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/checkout">View Cart (<%= cartLength %>)</a></li>
+            </ul>
+        </nav>
+
+        <!-- Filter Container -->
+        <div class="filter-container">
+            <!-- Product Type Filter -->
+            <select name="producttype" id="producttype">
+                <option value="">All</option>
+                <% if (types && types.length > 0) { %>
+                    <% types.forEach(type => { %>
+                        <option value="<%= type.producttype %>" <%= producttype === type.producttype ? 'selected' : '' %>><%= type.producttype %></option>
+                    <% }) %>
+                <% } %>
+            </select>
+
+            <!-- Price Filter -->
+            <select name="price" id="price">
+                <option value="">All Prices</option>
+                <option value="10" <%= price === '10' ? 'selected' : '' %>>Under $10</option>
+                <option value="20" <%= price === '20' ? 'selected' : '' %>>Under $20</option>
+                <option value="30" <%= price === '30' ? 'selected' : '' %>>Under $30</option>
+                <option value="50" <%= price === '50' ? 'selected' : '' %>>Under $50</option>
+            </select>
+        </div>
+
+        <div class="page-wrapper">
+            <div class="product-container">
+                <h1 class="product-page-title">Shop</h1>
+
+                <!-- Display a message if no products match the filter -->
+                <% if (products.length === 0) { %>
+                    <div class="no-products-message">
+                        No products found matching your filter.
+                    </div>
+                <% } else { %>
+                    <div class="products">
+                        <% products.forEach(product => { %>
+                            <div class="product-item">
+                                <!-- Product Image -->
+                                <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
+
+                                <!-- Product Name and Price -->
+                                <div class="product-details">
+                                    <h2 class="product-name"><%= product.productname + ' ' + product.producttype %></h2>
+                                    <p class="product-price">$<%= product.price %></p>
+                                    <button class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <script src="/script/script.js"></script>
+</body>
+</html>

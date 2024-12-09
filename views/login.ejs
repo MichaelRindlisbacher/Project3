@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ponds & Puddles</title>
+    <link rel="stylesheet" href="/styles.css" type="text/css">
+</head>
+<body class="general-page">
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="/"><img src="/images/logo.png" alt="P & P Logo"></a>
+        </div>        
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/product">Shop</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+    <div class="login-container">
+        <div class="login-box">
+            <h2 class="login-title">Ponds & Puddles</h2>
+            <form action="/login" method="post">
+                <label for="username" class="login-label">Username</label>
+                <input type="text" id="username" name="username" class="login-input" required>
+
+                <label for="password" class="login-label">Password</label>
+                <input type="password" id="password" name="password" class="login-input" required>
+
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+    <script src="../script/script.js"></script>
+</body>
+</html>
