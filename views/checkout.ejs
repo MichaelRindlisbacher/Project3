@@ -7,17 +7,7 @@
     <link rel="stylesheet" href="/checkout.css">
 </head>
 <body class="general-page">
-    <nav class="navbar">
-        <div class="nav-logo">
-            <a href="/"><img src="/images/logo.png" alt="P & P Logo"></a>
-        </div>        
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/product">Shop</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/checkout">View Cart (<%= cartLength %>)</a></li>
-        </ul>
-    </nav> 
+    <%- include('partials/navbar'); %>
 
     <div class="about-us-container">
         <h1 class="about-title">View Cart</h1>
@@ -46,11 +36,11 @@
         <div id="checkout-form-container" style="display: none;">
             <h2>Checkout</h2><br>
             <form id="checkout-form" action="/checkout" method="POST">
-            <label for="first-name">First Name:</label>
-            <input type="text" id="first-name" name="first-name" />
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" />
             <br>
-            <label for="last-name">Last Name:</label>
-            <input type="text" id="last-name" name="last-name" />
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" />
             <br>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" />
@@ -67,13 +57,17 @@
             <label for="zip">Zip:</label>
             <input type="text" id="zip" name="zip" />
             <br>
-            <label for="wrist-size">Wrist Size:</label>
-            <select id="wrist-size" name="wrist-size">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+            <label for="wrist_size">Wrist Size:</label>
+            <select id="wrist_size" name="wrist_size">
+                <option value="8">Newborn - 8 CM</option>
+                <option value="9.5">Infant - 9.5 CM</option>
+                <option value="13">Youth Small - 13 CM</option>
+                <option value="14">Youth Medium - 14 CM</option>
+                <option value="15">Youth Large - 15 CM</option>
+                <option value="16">Adult Small - 16 CM</option>
+                <option value="17">Adult Medium - 17 CM</option>
+                <option value="18">Adult Large - 18 CM</option>
+                <option value="19">Adult XLarge - 19 CM</option>
             </select>
             <br>
             <button type="submit">Submit Order</button>
