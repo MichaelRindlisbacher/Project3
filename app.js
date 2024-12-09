@@ -46,17 +46,6 @@ const db = require("knex") ({ // Setting up connection with pg database
 }
 })
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // or 'STARTTLS'
-    auth: {
-      user: 'your-email@gmail.com',
-      pass: 'your-password',
-    },
-  });
-
-
 db.raw('SELECT 1').then(() => {
     console.log('Database connected successfully');
 }).catch(err => {
@@ -162,37 +151,11 @@ try {
 });
 
 app.post('/checkout', (req, res) => {
-    const order = req.body;
-    sendOrderEmail(order);
-    res.redirect('/thank-you');
-  });
-
-// app.post('/send-email', (req, res) => {
-// const order = req.body;
-// const mailOptions = {
-//     from: 'your-email@gmail.com',
-//     to: 'ethanscott402@gmail.com',
-//     subject: 'New Order',
-//     text: `
-//     Order Details:
-//     Name: ${order.name}
-//     Email: ${order.email}
-//     Order Total: $${order.total}
-//     Items:
-//     ${order.items.map((item) => `${item.name} x ${item.quantity}`).join('\n')}
-//     `,
-// };
-
-// transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//     console.log(error);
-//     res.status(500).send({ message: 'Error sending email' });
-//     } else {
-//     console.log('Email sent: ' + info.response);
-//     res.send({ message: 'Email sent successfully' });
-//     }
-// });
-// });
+  console.log('Checkout form submitted!');
+  const { first_name, last_name, email, address, city, state, zip, wrist_size } = req.body;  
+  console.log(first_name, last_name, email, address, city, state, zip, wrist_size);
+  res.redirect('/');
+});
 
 app.get('/login', (req, res) => {
    res.render('login')

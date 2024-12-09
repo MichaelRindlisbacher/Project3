@@ -7,17 +7,7 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="general-page">
-    <nav class="navbar">
-        <div class="nav-logo">
-            <a href="/"><img src="/images/logo.png" alt="P & P Logo"></a>
-        </div>        
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/product">Shop</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/checkout">View Cart (<%= cartLength %>)</a></li>
-        </ul>
-    </nav>
+    <%- include('partials/navbar'); %>
     <!-- About Us Section -->
     <div class="about-us-container">
         <!-- Title -->
