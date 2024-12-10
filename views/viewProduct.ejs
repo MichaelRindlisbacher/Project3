@@ -7,6 +7,114 @@
         <title>Document</title>
         <link rel="stylesheet" href="/product_styles.css">
         <link rel="stylesheet" href="/product_styles.css">
+        <style>
+            /* Reset and general settings */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Lucida Console", "Courier New", monospace;
+            }
+    
+            body {
+                background-color: #f8f5f1; /* Light beige background */
+                color: #5c5c5c; /* Neutral text color */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                min-height: 100vh;
+                padding: 20px;
+            }
+    
+            /* Styling for labels and text */
+            label {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #333; /* Darker neutral for contrast */
+                display: block;
+                margin-bottom: 10px;
+            }
+    
+            b {
+                color: #5c5c5c; /* Matches body text color */
+            }
+    
+            /* Product image styling */
+            .product-image {
+                max-width: 300px;
+                max-height: 300px;
+                object-fit: cover;
+                border-radius: 8px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                margin: 20px 0;
+            }
+    
+            /* Form styling */
+            form {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+            }
+    
+            button {
+                background-color: #c6a87d; /* Matches navbar color */
+                color: #ffffff;
+                font-size: 1rem;
+                font-weight: bold;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .product-price{
+                font-size: 2rem;
+                color: #666;
+                margin-top: 5px;
+            }
+    
+            button:hover {
+                background-color: #5c5c5c; /* Dark hover effect */
+                color: #ffffff;
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 600px) {
+                body {
+                    padding: 10px;
+                }
+    
+                .product-image {
+                    max-width: 100%;
+                    max-height: 200px;
+                }
+    
+                label {
+                    font-size: 1rem;
+                }
+    
+                button {
+                    font-size: 0.9rem;
+                    padding: 8px 16px;
+                }
+            }
+    
+            .big-label {
+                font-size: 45px;
+            }
+            .button-container {
+            display: flex;
+            justify-content: center; /* Centers the buttons horizontally */
+            gap: 10px; /* Space between the buttons */
+            margin-top: 20px; /* Optional: Add some space above the buttons */
+            }
+
+            .button-container form {
+                margin: 0; /* Remove default margins on forms */
+            }
+        </style>
     </head>
     <body class="general-page">
     <div class="product-page">
@@ -15,118 +123,17 @@
             <center>
             <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
             <br><br>
-            <h2 class="product-name"><%= product.productname %> <%= product.producttype %></h2>
+            <h2 class="product-name big-label"><%= product.productname %> <%= product.producttype %></h2>
             <br><br>
             <p class="product-price">Price: $<%= product.price %></p>
-            <br><br>
-            <form action="/product" method="GET">
-                <button type="submit">Return</button>
-            </form>
+            <br>
+            <div class="button-container">
+                <form action="/confirmBuy">
+                    <button type="submit">Buy</button>
+                </form>
+                <form action="/product" method="GET">
+                    <button type="submit">Return</button>
+                </form>
+            </div>
             </center>
-    <style>
-        /* Reset and general settings */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Lucida Console", "Courier New", monospace;
-        }
-
-        body {
-            background-color: #f8f5f1; /* Light beige background */
-            color: #5c5c5c; /* Neutral text color */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* Styling for labels and text */
-        label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333; /* Darker neutral for contrast */
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        b {
-            color: #5c5c5c; /* Matches body text color */
-        }
-
-        /* Product image styling */
-        .product-image {
-            max-width: 300px;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-        }
-
-        /* Form styling */
-        form {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        button {
-            background-color: #c6a87d; /* Matches navbar color */
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #5c5c5c; /* Dark hover effect */
-            color: #ffffff;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
-            .product-image {
-                max-width: 100%;
-                max-height: 200px;
-            }
-
-            label {
-                font-size: 1rem;
-            }
-
-            button {
-                font-size: 0.9rem;
-                padding: 8px 16px;
-            }
-        }
-
-        .big-label {
-            font-size: 45px;
-        }
-
-    </style>
-    <body>
-        <label class="big-label"><b>Product</b></label>
-        <br><br>
-        <label>Name: <%= product.productname %></label>
-        <br><br>
-        <label>Type: <%= product.producttype %></label>
-        <br><br>
-        <label>Price: <%= product.price %></label>
-        <br><br>
-        <form action="/admin" method="GET">
-            <button type="submit">Return</button>
-        </form>
-    </body>
 </html>
