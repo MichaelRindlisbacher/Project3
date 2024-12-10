@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Edit Product</title>
+  <link rel="stylesheet" href="/product_styles.css">
   <style>
     form {
       width: 50%;
@@ -29,24 +30,28 @@
       margin-right: 5px;
     }
     button {
-      background-color: #4CAF50;
+      background-color: #c6a87d;
       color: white;
       font-size: 12px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #45A049;
+      background-color: #c6a87d;
+    }
+
+    .main-content {
+      margin-top: 60px;
     }
   </style>
 </head>
-<body>
+<body class="main-content">
   <h1 style="text-align: center;">Edit Product</h1>
   <form action="/editProduct/<%= product.productid %>" method="POST">
     <!-- Product Name -->
     <label for="productname">Product Name</label>
     <input type="text" id="productname" name="productname" value="<%= product.productname %>" required oninput="this.value = this.value.toLowerCase()">
     <!-- Product Type -->
-    <label>Weapon</label>
+    <label>Product Type</label>
     <label>
       <input type="radio" name="producttype" value="bracelet" <%= product.producttype === 'bracelet' ? 'checked' : '' %>> bracelet
     </label>
