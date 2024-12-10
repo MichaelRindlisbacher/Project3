@@ -18,7 +18,7 @@
             <h2>Your Cart:</h2>
             <% cart.forEach(item => { %>
                 <div class="cart-item">
-                    <img src="/images/<%= item.name.toLowerCase().replace(/\s+/g, '') %>.jpg" alt="<%= item.name %>">
+                    <img src="/images/<%= item.name.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= item.name %>">
                     <p><strong><%= item.name + ' ' + item.type %></strong></p>
                     <p>Price: $<%= item.price %></p>
                     <p><select id="wrist_size" name="wrist_size">
