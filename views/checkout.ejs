@@ -13,7 +13,7 @@
         <h1 class="about-title">View Cart</h1>
 
         <!-- Display Cart Items -->
-        <div id="cart-items">
+        <div id="cart-items" onload="">
             <% if (cart.length > 0) { %>
             <h2>Your Cart:</h2>
             <% cart.forEach(item => { %>
@@ -41,10 +41,13 @@
             <p>Your cart is empty.</p>
             <% } %>
         </div>
-
-        <!-- Checkout Form -->
-        <button id="checkout-button">Checkout</button>
-
+        <div id="checkoutReady" style="display: none;">
+            <h1 id="cart-total-header">Cart Total: $<%=
+                cart.reduce((total, item) => total + parseInt(item.price), 0)
+              %></span></h1>
+            <!-- Checkout Form -->
+            <button id="checkout-button">Checkout</button>
+        </div>
         <div id="checkout-form-container" style="display: none;">
             <h2>Checkout</h2><br>
             <form id="checkout-form" action="/checkout" method="POST">
@@ -73,6 +76,6 @@
             </form>
         </div>
     </div>
-    <script src="/script/checkout.js"></script>
+    <script src="/script/checkout.js" onload="toggleCheckout('<%= cart.length %>')"></script>
 </body>
 </html>

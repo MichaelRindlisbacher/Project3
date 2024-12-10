@@ -153,6 +153,7 @@ try {
 
 app.post('/checkout', (req, res) => {
   console.log('Checkout form submitted!');
+  req.session.cart = [];
   const { first_name, last_name, email, address, city, state, zip } = req.body;  
   console.log(first_name, last_name, email, address, city, state, zip );
   res.redirect('/');
