@@ -153,10 +153,16 @@ try {
 
 app.post('/checkout', (req, res) => {
   console.log('Checkout form submitted!');
+  // req.session.cart.array.forEach(element => {
+    
+  // });
   req.session.cart = [];
   const { first_name, last_name, email, address, city, state, zip } = req.body;  
-  console.log(first_name, last_name, email, address, city, state, zip );
-  res.redirect('/');
+  res.redirect('/confirmation');
+});
+
+app.get('/confirmation', (req, res) => {
+    res.render('confirmation')
 });
 
 app.get('/login', (req, res) => {
