@@ -39,8 +39,8 @@ const db = require("knex") ({ // Setting up connection with pg database
     connection : {
     host : process.env.RDS_HOSTNAME || "localhost",
     user : process.env.RDS_USERNAME || "postgres",
-    password : process.env.RDS_PASSWORD || "Btarwars12",
-    database :process.env.RDS_DB_NAME || "BraceletStore",
+    password : process.env.RDS_PASSWORD || "Tz'i2122",
+    database :process.env.RDS_DB_NAME || "postgres",
     port : process.env.RDS_PORT || 5432, // Check port under the properties and connection of the database you're using in pgadmin4
     ssl : process.env.DB_SSL ? {rejectUnauthorized: false} : false
 }
@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
 app.get('/product', (req, res) => {
     let { producttype, price } = req.query;
 
-    let query = db('product').select('productname', 'price', 'producttype').orderBy('productname');
+    let query = db('product').select('productname', 'price', 'producttype', 'productid').orderBy('productname');
     
     if (producttype) {
         query = query.where('producttype', producttype);
@@ -92,6 +92,25 @@ app.get('/product', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about')
 });
+
+app.get('/viewProduct/:productid', (req, res) => {
+  let id = req.params.productid;
+  // Query the product by ID first
+  db('product')
+    .where('productid', id)
+    .first()
+    .then(product => {
+      if (!product) {
+        return res.status(404).send('product not found');
+      }
+      res.render('viewProduct', { product });
+      })
+    .catch(error => {
+      console.error('Error fetching Character for viewing:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 
 app.get('/checkout', (req, res) => {
     // Get the cart from the session or an empty array

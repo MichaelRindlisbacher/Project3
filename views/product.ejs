@@ -42,20 +42,22 @@
                         No products found matching your filter.
                     </div>
                 <% } else { %>
-                    <div class="products">
-                        <% products.forEach(product => { %>
-                            <div class="product-item">
-                                <!-- Product Image -->
-                                <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
-
-                                <!-- Product Name and Price -->
-                                <div class="product-details">
-                                    <h2 class="product-name"><%= product.productname + ' ' + product.producttype %></h2>
-                                    <p class="product-price">$<%= product.price %></p>
-                                    <button class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
+                        <div class="products">
+                            <% products.forEach(product => { %>
+                                <div class="product-item">
+                                    <a href="/viewProduct/<%= product.productid %>">
+                                        <!-- Product Image -->
+                                        <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
+                                        <!-- Product Name and Price -->
+                                        <div class="product-details">
+                                            <h2 class="product-name"><%= product.productname + ' ' + product.producttype %></h2>
+                                            <p class="product-price">$<%= product.price %></p>
+                                            <button class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                        <% }) %>
+                            <% }) %>
+                        </div>
                     </div>
                 <% } %>
             </div>

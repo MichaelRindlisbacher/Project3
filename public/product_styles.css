@@ -169,6 +169,17 @@ body {
     transition: transform 0.3s;
 }
 
+.product-view {
+    width: 300px; /* Set the desired width */
+    height: 400px; /* Set the desired height */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+
 .product-item:hover {
     transform: scale(1.05);
 }

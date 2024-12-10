@@ -5,18 +5,24 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="/product_styles.css">
     </head>
-    <body>
-        <label><b>Product:</b></label>
+    <body class="general-page">
+    <div class="product-page">
+        <%- include('partials/navbar'); %>
+        <br><br><br><br><br><br><br>
+            <center>
+            <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
+            <br><br>
+            <h2 class="product-name"><%= product.productname %> <%= product.producttype %></h2>
+            <br><br>
+            <p class="product-price">Price: $<%= product.price %></p>
+            <br><br>
+            <form action="/product" method="GET">
+                <button type="submit">Return</button>
+            </form>
+            </center>
         <br><br>
-        <label>Name: <%= product.productname %></label>
-        <br><br>
-        <label>Type: <%= product.producttype %></label>
-        <br><br>
-        <label>Price: <%= product.price %></label>
-        <br><br>
-        <form action="/admin" method="GET">
-            <button type="submit">Return</button>
-        </form>
+    </div>
     </body>
 </html>
