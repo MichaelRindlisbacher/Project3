@@ -1,3 +1,5 @@
+const checkoutReady = document.getElementById('checkoutReady');
+
 // checkout form button
 const checkoutButton = document.getElementById('checkout-button');
   checkoutButton.addEventListener('click', () => {
@@ -32,3 +34,13 @@ removeButtons.forEach(button => {
     });
   });
 });
+
+function toggleCheckout(cartLength){
+  console.log('toggleCheckout function called');
+  if(cartLength == 0){
+      checkoutReady.style.display = 'none';
+  } else {
+      checkoutReady.style.display = 'block';
+      document.getElementById('cart-total').textContent = cartLength;
+  }
+}

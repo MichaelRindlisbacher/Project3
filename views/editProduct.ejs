@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Product</title>
+  <style>
+    form {
+      width: 50%;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #F9F9F9;
+      font-size: 12px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      margin-right: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45A049;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Edit Product</h1>
+  <form action="/editProduct/<%= product.productid %>" method="POST">
+    <!-- Product Name -->
+    <label for="productname">Product Name</label>
+    <input type="text" id="productname" name="productname" value="<%= product.productname %>" required oninput="this.value = this.value.toLowerCase()">
+    <!-- Product Type -->
+    <label>Weapon</label>
+    <label>
+      <input type="radio" name="producttype" value="bracelet" <%= product.producttype === 'bracelet' ? 'checked' : '' %>> bracelet
+    </label>
+    <label>
+      <input type="radio" name="producttype" value="earrings" <%= product.producttype === 'earrings' ? 'checked' : '' %>> earrings
+    </label>
+    <!-- Price -->
+    <label for="price">Price</label>
+    <input type="text" id="price" name="price" value="<%= product.price %>" required>
+    <!-- Submit Button -->
+    <button type="submit">Save Changes</button>
+  </form>
+</body>
+</html>

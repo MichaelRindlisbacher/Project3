@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <label><b>Product:</b></label>
+        <br><br>
+        <label>Name: <%= product.productname %></label>
+        <br><br>
+        <label>Type: <%= product.producttype %></label>
+        <br><br>
+        <label>Price: <%= product.price %></label>
+        <br><br>
+        <form action="/admin" method="GET">
+            <button type="submit">Return</button>
+        </form>
+    </body>
+</html>

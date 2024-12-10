@@ -39,9 +39,9 @@ const db = require("knex") ({ // Setting up connection with pg database
     connection : {
     host : process.env.RDS_HOSTNAME || "localhost",
     user : process.env.RDS_USERNAME || "postgres",
-    password : process.env.RDS_PASSWORD || "Inc0rrecT123",
-    database :process.env.RDS_DB_NAME || "postgres",
-    port : process.env.RDS_PORT || 8080, // Check port under the properties and connection of the database you're using in pgadmin4
+    password : process.env.RDS_PASSWORD || "Btarwars12",
+    database :process.env.RDS_DB_NAME || "BraceletStore",
+    port : process.env.RDS_PORT || 5432, // Check port under the properties and connection of the database you're using in pgadmin4
     ssl : process.env.DB_SSL ? {rejectUnauthorized: false} : false
 }
 })
@@ -103,7 +103,7 @@ app.get('/checkout', (req, res) => {
 // Route to handle adding a product to the cart
 app.post('/add-to-cart', (req, res) => {
     try {
-        const { productId, productName, productPrice } = req.body;
+        const { productId, productName, productPrice, productType } = req.body;
     
         // Initialize cart if it doesn't exist
         if (!req.session.cart) {
@@ -114,7 +114,8 @@ app.post('/add-to-cart', (req, res) => {
         const newItem = {
           id: productId,
           name: productName,
-          price: productPrice
+          price: productPrice,
+          type: productType
         };
     
         req.session.cart.push(newItem);
@@ -152,8 +153,9 @@ try {
 
 app.post('/checkout', (req, res) => {
   console.log('Checkout form submitted!');
-  const { first_name, last_name, email, address, city, state, zip, wrist_size } = req.body;  
-  console.log(first_name, last_name, email, address, city, state, zip, wrist_size);
+  req.session.cart = [];
+  const { first_name, last_name, email, address, city, state, zip } = req.body;  
+  console.log(first_name, last_name, email, address, city, state, zip );
   res.redirect('/');
 });
 
@@ -177,12 +179,104 @@ app.post('/login', async (req, res) => {
     }
   });
 
-  app.get('/admin', (req, res) => {
+app.get('/admin', (req, res) => {
     if (req.session.isAdmin) {
-        res.render(path.join(__dirname, 'views', 'admin.ejs'));
-    } else {
+        
+      db('product')
+      .select(
+        'productname',
+        'producttype',
+        'price',
+        'productid',
+      )
+      .orderBy('productname')
+      .then(products => {
+        // Render the admin.ejs template and pass the data
+        res.render(path.join(__dirname, 'views', 'admin.ejs'), {products});
+      })
+      .catch(error => {
+        console.error('Error querying database:', error);
+        res.status(500).send('Internal Server Error');
+      });
+      } else {
         res.redirect('/login');
     }
+});
+
+// get method that accesses and loads data to the product edit page
+app.get('/editProduct/:productid', (req, res) => {
+  let id = req.params.productid;
+  // Query the product by ID first
+  db('product')
+    .where('productid', id)
+    .first()
+    .then(product => {
+      if (!product) {
+        return res.status(404).send('product not found');
+      }
+      res.render('editProduct', { product });
+      })
+    .catch(error => {
+      console.error('Error fetching Character for editing:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// get method that posts changes from the product edit page to the database
+app.post('/editProduct/:productid', (req, res) => {
+  const id = req.params.productid;
+  // Access each value directly from req.body
+  const productname = req.body.productname;
+  const producttype = req.body.producttype;
+  const price = req.body.price;
+  // Update the product in the database
+  db('product')
+    .where('productid', id)
+    .update({
+      productname: productname,
+      producttype: producttype,
+      price: price
+    })
+    .then(() => {
+      res.redirect('/admin'); // Redirect to the list of products after saving
+    })
+    .catch(error => {
+      console.error('Error updating product:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// post method that deletes a character
+app.post('/deleteProduct/:productid', (req, res) => {
+  const id = req.params.id;
+  db('product')
+    .where('productid', id)
+    .del() // Deletes the record with the specified ID
+    .then(() => {
+      res.redirect('/admin'); // Redirect to the Character list after deletion
+    })
+    .catch(error => {
+      console.error('Error deleting product:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.get('/product/:productid', (req, res) => {
+  let id = req.params.productid;
+  // Query the product by ID first
+  db('product')
+    .where('productid', id)
+    .first()
+    .then(product => {
+      if (!product) {
+        return res.status(404).send('product not found');
+      }
+      res.render('viewProduct', { product });
+      })
+    .catch(error => {
+      console.error('Error fetching Character for editing:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
 
 app.listen( port, () => console.log(`Server running on http://localhost:${port}`)); //tells us the port is listening
