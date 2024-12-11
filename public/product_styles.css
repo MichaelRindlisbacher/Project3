@@ -264,3 +264,8 @@ button:hover {
     font-size: 14px;
     border-radius: 12px;
 }
+
+a {
+    text-decoration: none; /* remove underline */
+    color: inherit; /* inherit text color from parent element */
+}
