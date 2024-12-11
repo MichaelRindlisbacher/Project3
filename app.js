@@ -172,116 +172,128 @@ try {
 
 app.post('/checkout', (req, res) => {
   console.log('Checkout form submitted!');
-  const orderData = req.body;
 
-  db('customer')
-    .where({ custemail: orderData.custemail })
-    .then(customer => {
-      if (customer.length > 0) {
-        // Update existing customer record
-        db('customer')
-          .where({ custemail: orderData.custemail })
-          .update({
-            custfirstname: orderData.custfirstname,
-            custlastname: orderData.custlastname,
-            custstreet: orderData.custstreet,
-            custcity: orderData.custcity,
-            custstate: orderData.custstate,
-            custzip: orderData.custzip,
-            wristsize: orderData.wristsize
-          })
-          .then(() => {
-            // Get the existing customer ID
-            db('customer')
-              .where({ custemail: orderData.custemail })
-              .then(customer => {
-                const customerId = customer[0].id;
-                // Create a new order record
-                db('orders')
-                  .insert({
-                    customerid: customerId,
-                    orderdate: new Date()
-                  })
-                  .then(orderNumber => {
-                    db('orderlineitem')
-                      .insert({
-                        ordernumber: orderNumber,
-                        productid: orderData.productid,
-                        quantity: orderData.quantity
-                      })
-                      .then(() => {
-                        req.session.cart = [];
-                        res.redirect('/confirmation');
-                      })
-                      .catch(error => {
-                        console.error('Error creating order line item:', error);
-                        res.status(500).json({ message: 'Error creating order line item' });
-                      });
-                  })
-                  .catch(error => {
-                    console.error('Error creating order:', error);
-                    res.status(500).json({ message: 'Error creating order' });
-                  });
-              })
-              .catch(error => {
-                console.error('Error getting customer ID:', error);
-                res.status(500).json({ message: 'Error getting customer ID' });
-              });
-          })
-          .catch(error => {
-            console.error('Error updating customer record:', error);
-            res.status(500).json({ message: 'Error updating customer record' });
-          });
-      } else {
-        // Create a new customer record
-        db('customer')
-          .insert({
-            custfirstname: orderData.custfirstname,
-            custlastname: orderData.custlastname,
-            custemail: orderData.custemail,
-            custstreet: orderData.custstreet,
-            custcity: orderData.custcity,
-            custstate: orderData.custstate,
-            custzip: orderData.custzip,
-            wristsize: orderData.wristsize
-          })
-          .then(customerId => {
-            db('orders')
-              .insert({
-                customerid: customerId,
-                orderdate: new Date()
-              })
-              .then(orderNumber => {
-                db('orderlineitem')
-                  .insert({
-                    ordernumber: orderNumber,
-                    productid: orderData.productid,
-                    quantity: orderData.quantity
-                  })
-                  .then(() => {
-                    req.session.cart = [];
-                    res.redirect('/confirmation');
-                  })
-                  .catch(error => {
-                    console.error('Error creating order line item:', error);
-                    res.status(500).json({ message: 'Error creating order line item' });
-                  });
-              })
-              .catch(error => {
-                console.error('Error creating order:', error);
-                res.status(500).json({ message: 'Error creating order' });
-              });
-          })
-          .catch(error => {
-            console.error('Error creating customer record:', error);
-            res.status(500).json({ message: 'Error creating customer record' });
-          });
-      }
-    })
-    .catch(error => {
-      console.error('Error getting customer:', error);
-      res.status(500).json({ message: 'Error getting customer' });
-    });
+  const orderData = [
+    {
+      custfirstname: req.body.first_name,
+      custlastname: req.body.last_name,
+      custemail: req.body.email,
+      custstreet: req.body.address,
+      custcity: req.body.city,
+      custstate: req.body.state,
+      custzip: req.body.zip,
+      wristsize: req.body.wrist_size,
+      quantity: req.body.quantity || 1
+    }
+  ];
+
+  console.log('orderData:', orderData); 
+
+  // db.raw('SELECT * FROM customer WHERE custemail = ??', [orderData.custemail])
+  //   .then(customer => {
+  //     if (customer.length > 0) {
+  //       // Update existing customer record
+  //       db.raw('SELECT * FROM customer WHERE custemail = ??', [orderData.custemail])
+  //         .update({
+  //           custfirstname: orderData.custfirstname,
+  //           custlastname: orderData.custlastname,
+  //           custstreet: orderData.custstreet,
+  //           custcity: orderData.custcity,
+  //           custstate: orderData.custstate,
+  //           custzip: orderData.custzip,
+  //           wristsize: orderData.wristsize
+  //         })
+  //         .then(() => {
+  //           // Get the existing customer ID
+  //           db.raw('SELECT * FROM customer WHERE custemail = ??', [orderData.custemail])
+  //             .then(customer => {
+  //               const customerId = customer[0].id;
+  //               // Create a new order record
+  //               db('orders')
+  //                 .insert({
+  //                   customerid: customerId,
+  //                   orderdate: new Date()
+  //                 })
+  //                 .then(orderNumber => {
+  //                   db('orderlineitem')
+  //                     .insert({
+  //                       ordernumber: orderNumber,
+  //                       productid: orderData.productid,
+  //                       quantity: orderData.quantity
+  //                     })
+  //                     .then(() => {
+  //                       req.session.cart = [];
+  //                       res.redirect('/confirmation');
+  //                     })
+  //                     .catch(error => {
+  //                       console.error('Error creating order line item:', error);
+  //                       res.status(500).json({ message: 'Error creating order line item' });
+  //                     });
+  //                 })
+  //                 .catch(error => {
+  //                   console.error('Error creating order:', error);
+  //                   res.status(500).json({ message: 'Error creating order' });
+  //                 });
+  //             })
+  //             .catch(error => {
+  //               console.error('Error getting customer ID:', error);
+  //               res.status(500).json({ message: 'Error getting customer ID' });
+  //             });
+  //         })
+  //         .catch(error => {
+  //           console.error('Error updating customer record:', error);
+  //           res.status(500).json({ message: 'Error updating customer record' });
+  //         });
+  //     } else {
+  //       // Create a new customer record
+  //       db('customer')
+  //         .insert({
+  //           custfirstname: orderData.custfirstname,
+  //           custlastname: orderData.custlastname,
+  //           custemail: orderData.custemail,
+  //           custstreet: orderData.custstreet,
+  //           custcity: orderData.custcity,
+  //           custstate: orderData.custstate,
+  //           custzip: orderData.custzip,
+  //           wristsize: orderData.wristsize
+  //         })
+  //         .then(customerId => {
+  //           db('orders')
+  //             .insert({
+  //               customerid: customerId,
+  //               orderdate: new Date()
+  //             })
+  //             .then(orderNumber => {
+  //               db('orderlineitem')
+  //                 .insert({
+  //                   ordernumber: orderNumber,
+  //                   productid: orderData.productid,
+  //                   quantity: orderData.quantity
+  //                 })
+  //                 .then(() => {
+  //                   req.session.cart = [];
+  //                   res.redirect('/confirmation');
+  //                 })
+  //                 .catch(error => {
+  //                   console.error('Error creating order line item:', error);
+  //                   res.status(500).json({ message: 'Error creating order line item' });
+  //                 });
+  //             })
+  //             .catch(error => {
+  //               console.error('Error creating order:', error);
+  //               res.status(500).json({ message: 'Error creating order' });
+  //             });
+  //         })
+  //         .catch(error => {
+  //           console.error('Error creating customer record:', error);
+  //           res.status(500).json({ message: 'Error creating customer record' });
+  //         });
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error('Error getting customer:', error);
+  //     res.status(500).json({ message: 'Error getting customer' });
+  //   });
 });
 
 app.get('/confirmation', (req, res) => {
