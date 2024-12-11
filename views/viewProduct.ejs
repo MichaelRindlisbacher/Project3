@@ -129,11 +129,47 @@
             <br>
             <div class="button-container">
                 <form action="/confirmBuy">
-                    <button type="submit">Buy</button>
+                    <button type="submit">Buy Now</button>
                 </form>
                 <form action="/product" method="GET">
                     <button type="submit">Return</button>
                 </form>
+                    <button type="submit" id="add-to-cart" class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
+
+                <script>
+                    const addToCart = document.getElementById('add-to-cart');
+                  
+                    addToCart.addEventListener('click', function(event) {
+                      event.preventDefault();
+                  
+                      const productId = document.getElementById('add-to-cart').getAttribute('data-product-id');
+                      const productName = document.getElementById('add-to-cart').getAttribute('data-product-name');
+                      const productPrice = document.getElementById('add-to-cart').getAttribute('data-product-price');
+                      const productType = document.getElementById('add-to-cart').getAttribute('data-product-type');
+                  
+                      fetch('/add-to-cart', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ productId, productName, productPrice, productType }),
+                      })
+                        .then(response => {
+                          if (!response.ok) {
+                            throw new Error('Error adding to cart');
+                          }
+                          return response.json();
+                        })
+                        .then(data => {
+                          console.log('Product added to cart:', data);
+                          location.reload();
+                          alert('Product added to cart!');
+                        })
+                        .catch(error => {
+                          console.error('Error adding to cart:', error);
+                        });
+                    });
+                  </script>
             </div>
             </center>
 </html>

@@ -14,25 +14,13 @@
 
         <!-- Display Cart Items -->
         <div id="cart-items" onload="">
-            <% if (cart.length > 0) { %>
+            <% if (cart && cart.length > 0) { %>
             <h2>Your Cart:</h2>
             <% cart.forEach(item => { %>
                 <div class="cart-item">
                     <img src="/images/<%= item.name.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= item.name %>">
                     <p><strong><%= item.name + ' ' + item.type %></strong></p>
                     <p>Price: $<%= item.price %></p>
-                    <p><select id="wrist_size" name="wrist_size">
-                        <option value="0">Select Wrist Size</option>
-                        <option value="8">Newborn - 8 CM</option>
-                        <option value="9.5">Infant - 9.5 CM</option>
-                        <option value="13">Youth Small - 13 CM</option>
-                        <option value="14">Youth Medium - 14 CM</option>
-                        <option value="15">Youth Large - 15 CM</option>
-                        <option value="16">Adult Small - 16 CM</option>
-                        <option value="17">Adult Medium - 17 CM</option>
-                        <option value="18">Adult Large - 18 CM</option>
-                        <option value="19">Adult XLarge - 19 CM</option>
-                    </select></p>
                     <%= item.id %><br>
                     <p><button class="remove-from-cart" data-product-id="<%= item.id %>">Remove</button></p>
                 </div>
@@ -72,7 +60,21 @@
             <label for="zip">Zip:</label>
             <input type="text" id="zip" name="zip" />            
             <br>
+            <select id="wrist_size" name="wrist_size">
+                <option value="0">Select Wrist Size</option>
+                <option value="8">Newborn - 8 CM</option>
+                <option value="9.5">Infant - 9.5 CM</option>
+                <option value="13">Youth Small - 13 CM</option>
+                <option value="14">Youth Medium - 14 CM</option>
+                <option value="15">Youth Large - 15 CM</option>
+                <option value="16">Adult Small - 16 CM</option>
+                <option value="17">Adult Medium - 17 CM</option>
+                <option value="18">Adult Large - 18 CM</option>
+                <option value="19">Adult XLarge - 19 CM</option>
+            </select>
+            <br>
             <button type="submit">Submit Order</button>
+            <br>
             </form>
         </div>
     </div>

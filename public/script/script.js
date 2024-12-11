@@ -10,38 +10,39 @@ document.getElementById('price').addEventListener('change', function() {
     window.location.href = `/product?producttype=${producttype}&price=${price}`;
 });
 
-// Get all "Add to Cart" buttons
-const addToCartButtons = document.querySelectorAll('.add-to-cart');
+// Get the parent element that contains the "Add to Cart" buttons
+const productContainer = document.querySelector('.product-container');
 
-// Event listener for each "Add to Cart" button
-addToCartButtons.forEach(button => {
-button.addEventListener('click', function() {
-    const productId = this.getAttribute('data-product-id');
-    const productName = this.getAttribute('data-product-name');
-    const productPrice = this.getAttribute('data-product-price');
-    const productType = this.getAttribute('data-product-type');
+// Attach a delegated event listener to the parent element
+productContainer.addEventListener('click', function(event) {
+  // Check if the event was triggered by an "Add to Cart" button
+  if (event.target.classList.contains('add-to-cart')) {
+    const productId = event.target.getAttribute('data-product-id');
+    const productName = event.target.getAttribute('data-product-name');
+    const productPrice = event.target.getAttribute('data-product-price');
+    const productType = event.target.getAttribute('data-product-type');
 
     // Add product to cart (send to backend, save in session)
     fetch('/add-to-cart', {
-    method: 'POST',
-    headers: {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ productId, productName, productPrice, productType }),
+      },
+      body: JSON.stringify({ productId, productName, productPrice, productType }),
     })
-    .then(response => {
-    // Log the response to see if it's an HTML error page
-    return response.text().then(text => {
-        console.log(text);  // Log the raw response text
-        return JSON.parse(text);  // Try to parse the JSON
-    });
-    })
-    .then(data => {
-    console.log('Product added to cart:', data);
-    location.reload();
-    })
-    .catch(error => {
-    console.error('Error adding to cart:', error);
-    });
-});
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error adding to cart');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Product added to cart:', data);
+        location.reload();
+        alert('Product added to cart!');
+      })
+      .catch(error => {
+        console.error('Error adding to cart:', error);
+      });
+  }
 });

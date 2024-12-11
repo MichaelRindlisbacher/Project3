@@ -14,6 +14,23 @@ body {
     color: #5c5c5c;
 }
 
+button {
+    background-color: #c6a87d; /* Matches navbar color */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5c5c5c; /* Dark hover effect */
+    color: #ffffff;
+}
+
 /* login page styling */
 .login-container {
     display: flex;

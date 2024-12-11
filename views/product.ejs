@@ -51,10 +51,10 @@
                                         <!-- Product Name and Price -->
                                         <div class="product-details">
                                             <h2 class="product-name"><%= product.productname + ' ' + product.producttype %></h2>
-                                            <p class="product-price">$<%= product.price %></p>
-                                            <button class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
+                                            <p class="product-price">$<%= product.price %></p></a><br>
+                                            <button id="add-to-cart" class="add-to-cart" data-product-id="<%= product.id %>" data-product-name="<%= product.productname %>" data-product-price="<%= product.price %>" data-product-type="<%= product.producttype %>">Add to Cart</button>
                                         </div>
-                                    </a>
+                                    
                                 </div>
                             <% }) %>
                         </div>
