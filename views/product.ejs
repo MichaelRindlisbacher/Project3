@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - P & P</title>
     <link rel="stylesheet" href="/product_styles.css">
+    <style>
+        .fallback-message {
+            display: flex; /* Center the text within the container */
+            align-items: center; /* Vertically center the text */
+            justify-content: center; /* Horizontally center the text */
+            width: 100%; /* Ensure it takes up the full width of the image container */
+            height: 400px; /* Match the height of the product image */
+            font-size: 2rem; /* Adjust font size for readability */
+            font-weight: bold;
+            color: #5c5c5c; /* A neutral color to fit your theme */
+            background-color: #f0f0f0; /* Light background color to signify placeholder */
+            border: 1px dashed #ccc; /* Dashed border to indicate it's a placeholder */
+            border-radius: 8px; /* Match the border radius of the image container */
+            text-align: center;
+            padding-top: 160px;
+            overflow: hidden; /* Ensure no overflow issues */
+        }
+
+    </style>
 </head>
 <body class="general-page">
     <div class="product-page">
@@ -47,8 +66,12 @@
                                 <div class="product-item">
                                     <a href="/viewProduct/<%= product.productid %>">
                                         <!-- Product Image -->
-                                        <img src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" alt="<%= product.productname %>" class="product-image">
-                                        <!-- Product Name and Price -->
+                                        <img 
+                                        src="/images/<%= product.productname.toLowerCase().replace(/\s+/g, '') %>.JPG" 
+                                        alt="<%= product.productname %>" 
+                                        class="product-image"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <div class="fallback-message" style="display: none;">Photo coming<br> soon</div>                                        <!-- Product Name and Price -->
                                         <div class="product-details">
                                             <h2 class="product-name"><%= product.productname + ' ' + product.producttype %></h2>
                                             <p class="product-price">$<%= product.price %></p></a><br>
