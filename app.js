@@ -39,8 +39,8 @@ const db = require("knex") ({ // Setting up connection with pg database
     connection : {
     host : process.env.RDS_HOSTNAME || "localhost",
     user : process.env.RDS_USERNAME || "postgres",
-    password : process.env.RDS_PASSWORD || "Tz'i2122",
-    database :process.env.RDS_DB_NAME || "postgres",
+    password : process.env.RDS_PASSWORD || "Btarwars12",
+    database :process.env.RDS_DB_NAME || "BraceletStore",
     port : process.env.RDS_PORT || 5432, // Check port under the properties and connection of the database you're using in pgadmin4
     ssl : process.env.DB_SSL ? {rejectUnauthorized: false} : false
 }
@@ -351,7 +351,7 @@ app.get('/editProduct/:productid', (req, res) => {
     });
 });
 
-// get method that posts changes from the product edit page to the database
+// post method that posts changes from the product edit page to the database
 app.post('/editProduct/:productid', (req, res) => {
   const id = req.params.productid;
   // Access each value directly from req.body
@@ -377,7 +377,7 @@ app.post('/editProduct/:productid', (req, res) => {
 
 // post method that deletes a character
 app.post('/deleteProduct/:productid', (req, res) => {
-  const id = req.params.id;
+  const id = req.params.productid;
   db('product')
     .where('productid', id)
     .del() // Deletes the record with the specified ID
@@ -404,6 +404,32 @@ app.get('/product/:productid', (req, res) => {
       })
     .catch(error => {
       console.error('Error fetching Character for editing:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.get('/addProduct', (req, res) => {
+  res.render('addProduct');
+});
+
+// post method that posts the product from the add page to the database
+app.post('/addProduct', (req, res) => {
+  // Access each value directly from req.body
+  const productname = req.body.productname;
+  const producttype = req.body.producttype;
+  const price = req.body.price;
+  // add the product in the database
+  db('product')
+    .insert({
+      productname: productname,
+      producttype: producttype,
+      price: price
+    })
+    .then(() => {
+      res.redirect('/admin'); // Redirect to the list of products after saving
+    })
+    .catch(error => {
+      console.error('Error adding product:', error);
       res.status(500).send('Internal Server Error');
     });
 });

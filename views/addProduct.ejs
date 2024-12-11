@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Edit Product</title>
+  <title>Add Product</title>
   <link rel="stylesheet" href="/product_styles.css">
   <style>
     form {
@@ -45,22 +45,22 @@
   </style>
 </head>
 <body class="main-content">
-  <h1 style="text-align: center;">Edit Product</h1>
-  <form action="/editProduct/<%= product.productid %>" method="POST">
+  <h1 style="text-align: center;">Add Product</h1>
+  <form action="/addProduct" method="POST">
     <!-- Product Name -->
     <label for="productname">Product Name</label>
-    <input type="text" id="productname" name="productname" value="<%= product.productname %>" required oninput="this.value = this.value.toLowerCase()">
+    <input type="text" id="productname" name="productname" required oninput="this.value = this.value.toLowerCase()">
     <!-- Product Type -->
     <label>Product Type</label>
     <label>
-      <input type="radio" name="producttype" value="bracelet" <%= product.producttype === 'bracelet' ? 'checked' : '' %>> bracelet
+      <input type="radio" name="producttype" value="bracelet"> bracelet
     </label>
     <label>
-      <input type="radio" name="producttype" value="earrings" <%= product.producttype === 'earrings' ? 'checked' : '' %>> earrings
+      <input type="radio" name="producttype" value="earrings"> earrings
     </label>
     <!-- Price -->
     <label for="price">Price</label>
-    <input type="number" id="price" name="price" value="<%= product.price %>" required>
+    <input type="number" id="price" name="price" required>
     <!-- Submit Button -->
     <button type="submit">Save Changes</button>
   </form>
